@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RevShell — Reverse Shell Generator</title>
+  <meta name="description" content="Generate reverse shell payloads for ethical penetration testing. Supports Bash, Python, PHP, Ruby, Perl, Netcat, PowerShell, C, Java and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+  <!-- Animated background -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow--1" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow--2" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow--3" aria-hidden="true"></div>
+
+  <!-- Ethical Disclaimer Banner -->
+  <div class="disclaimer-banner" id="disclaimerBanner">
+    <div class="disclaimer-icon">⚠️</div>
+    <div class="disclaimer-text">
+      <strong>Ethical Use Only</strong> — This tool is intended for authorized penetration testing, CTF challenges, and security research. Unauthorized access to systems is illegal.
+    </div>
+    <button class="disclaimer-close" id="disclaimerClose" aria-label="Close disclaimer">✕</button>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header__logo">
+      <div class="logo-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <rect x="2" y="6" width="28" height="20" rx="3" stroke="url(#logoGrad)" stroke-width="2" fill="none"/>
+          <line x1="8" y1="14" x2="14" y2="14" stroke="url(#logoGrad)" stroke-width="2" stroke-linecap="round"/>
+          <line x1="8" y1="18" x2="20" y2="18" stroke="url(#logoGrad)" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+          <text x="17" y="15.5" font-family="monospace" font-size="8" fill="url(#logoGrad)" font-weight="bold">_</text>
+          <defs>
+            <linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32">
+              <stop offset="0%" stop-color="#00f5a0"/>
+              <stop offset="100%" stop-color="#00d9f5"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <span class="logo-text">Rev<span class="logo-accent">Shell</span></span>
+    </div>
+    <nav class="header__nav">
+      <a href="#generator" class="nav-link active">Generator</a>
+      <a href="#shells" class="nav-link">Shells</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="generator">
+    <h1 class="hero__title">Reverse Shell <span class="gradient-text">Generator</span></h1>
+    <p class="hero__subtitle">Generate reverse shell in seconds. For penetration testing &amp; security research only.</p>
+  </section>
+
+  <!-- Main App -->
+  <main class="app">
+    <!-- Config Panel -->
+    <section class="config-panel glass-card">
+      <div class="panel-header">
+        <div class="terminal-dots">
+          <span class="dot dot--red"></span>
+          <span class="dot dot--yellow"></span>
+          <span class="dot dot--green"></span>
+        </div>
+        <span class="panel-title">Configuration</span>
+      </div>
+
+      <div class="config-grid">
+        <div class="input-group">
+          <label for="ipAddress" class="input-label">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 1.5a5.5 5.5 0 110 11 5.5 5.5 0 010-11zM8 5a1 1 0 100 2 1 1 0 000-2zm-.75 3.5a.75.75 0 00-.75.75v2a.75.75 0 001.5 0v-2a.75.75 0 00-.75-.75z" opacity=".7"/></svg>
+            IP Address
+          </label>
+          <input type="text" id="ipAddress" class="input-field" placeholder="10.10.14.5" value="10.10.14.5" spellcheck="false" autocomplete="off" />
+        </div>
+        <div class="input-group">
+          <label for="portNumber" class="input-label">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M3 2a1 1 0 00-1 1v10a1 1 0 001 1h10a1 1 0 001-1V3a1 1 0 00-1-1H3zm1 2h8v8H4V4z" opacity=".7"/></svg>
+            Port
+          </label>
+          <input type="number" id="portNumber" class="input-field" placeholder="4444" value="4444" min="1" max="65535" />
+        </div>
+      </div>
+
+      <!-- Encoding Options -->
+      <div class="encoding-options">
+        <label class="checkbox-label" for="urlEncode">
+          <input type="checkbox" id="urlEncode" />
+          <span class="checkbox-custom"></span>
+          URL Encode
+        </label>
+        <label class="checkbox-label" for="base64Encode">
+          <input type="checkbox" id="base64Encode" />
+          <span class="checkbox-custom"></span>
+          Base64 Encode
+        </label>
+        <label class="checkbox-label" for="doubleQuotes">
+          <input type="checkbox" id="doubleQuotes" />
+          <span class="checkbox-custom"></span>
+          Double Quotes
+        </label>
+      </div>
+    </section>
+
+    <!-- Shell Selector -->
+    <section class="shell-panel glass-card" id="shells">
+      <div class="panel-header">
+        <div class="terminal-dots">
+          <span class="dot dot--red"></span>
+          <span class="dot dot--yellow"></span>
+          <span class="dot dot--green"></span>
+        </div>
+        <span class="panel-title">Select Shell Type</span>
+        <span class="shell-count" id="shellCount">0 shells</span>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="search-container">
+        <div class="search-input-wrap">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16" stroke-linecap="round"/></svg>
+          <input type="text" id="shellSearch" class="search-input" placeholder="Search shells... (e.g. python, bash, php)" spellcheck="false" autocomplete="off" />
+          <button class="search-clear hidden" id="searchClear" aria-label="Clear search">✕</button>
+        </div>
+      </div>
+
+      <!-- Category Tabs with Scroll Arrows -->
+      <div class="category-tabs-wrapper">
+        <button class="cat-scroll-btn cat-scroll-btn--left" id="catScrollLeft" aria-label="Scroll categories left">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 2 4 7 9 12"/></svg>
+        </button>
+        <div class="category-tabs" id="categoryTabs">
+          <!-- Injected by JS -->
+        </div>
+        <button class="cat-scroll-btn cat-scroll-btn--right" id="catScrollRight" aria-label="Scroll categories right">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 2 10 7 5 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Shell List -->
+      <div class="shell-list" id="shellList">
+        <!-- Injected by JS -->
+      </div>
+
+      <!-- No results -->
+      <div class="no-results hidden" id="noResults">
+        <span class="no-results-icon">🔍</span>
+        <p>No shells found matching your search.</p>
+      </div>
+    </section>
+
+    <!-- Output Panel -->
+    <section class="output-panel">
+      <!-- Reverse Shell Output -->
+      <div class="output-card glass-card">
+        <div class="output-header">
+          <div class="output-label">
+            <span class="output-badge">PAYLOAD</span>
+            <span id="activeShellName">Reverse Shell Command</span>
+          </div>
+          <button class="copy-btn" id="copyShell" aria-label="Copy reverse shell command">
+            <svg class="copy-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M5 2a1 1 0 00-1 1v1H3a1 1 0 00-1 1v8a1 1 0 001 1h7a1 1 0 001-1v-1h1a1 1 0 001-1V3a1 1 0 00-1-1H5zm0 2h6v7H5V4zm-2 2v6h6v1H3V6z"/></svg>
+            <span class="copy-text">Copy</span>
+          </button>
+        </div>
+        <div class="code-block" id="shellOutput">
+          <code id="shellCode">← Select a shell type from above to generate a payload</code>
+        </div>
+      </div>
+
+      <!-- Listener Output -->
+      <div class="output-card glass-card listener-card">
+        <div class="output-header">
+          <div class="output-label">
+            <span class="output-badge output-badge--listener">LISTENER</span>
+            Listener Command
+          </div>
+          <button class="copy-btn" id="copyListener" aria-label="Copy listener command">
+            <svg class="copy-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M5 2a1 1 0 00-1 1v1H3a1 1 0 00-1 1v8a1 1 0 001 1h7a1 1 0 001-1v-1h1a1 1 0 001-1V3a1 1 0 00-1-1H5zm0 2h6v7H5V4zm-2 2v6h6v1H3V6z"/></svg>
+            <span class="copy-text">Copy</span>
+          </button>
+        </div>
+
+        <!-- Listener Type Selector with Scroll Arrows -->
+        <div class="listener-type-wrap">
+          <span class="listener-type-label">Type</span>
+          <button class="cat-scroll-btn cat-scroll-btn--left" id="listenerScrollLeft" aria-label="Scroll listener types left">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 2 4 7 9 12"/></svg>
+          </button>
+          <div class="listener-types" id="listenerTypes">
+            <!-- Injected by JS -->
+          </div>
+          <button class="cat-scroll-btn cat-scroll-btn--right" id="listenerScrollRight" aria-label="Scroll listener types right">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 2 10 7 5 12"/></svg>
+          </button>
+        </div>
+
+        <!-- Editable Listener Config -->
+        <div class="listener-config">
+          <div class="listener-input-group" id="listenerIpGroup">
+            <label for="listenerIp" class="listener-label">IP</label>
+            <input type="text" id="listenerIp" class="listener-input" placeholder="0.0.0.0" value="0.0.0.0" spellcheck="false" autocomplete="off" />
+          </div>
+          <div class="listener-input-group">
+            <label for="listenerPort" class="listener-label">Port</label>
+            <input type="number" id="listenerPort" class="listener-input" placeholder="4444" value="4444" min="1" max="65535" />
+          </div>
+        </div>
+        <div class="code-block" id="listenerOutput">
+          <code id="listenerCode">nc -lvnp 4444</code>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="footer-text">Built for ethical hackers & security researchers.</p>
+    <p class="footer-text">Use Responsibly.</p>
+    <p class="footer-copy">© 2026 RevShell Generator — For authorized testing only.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
