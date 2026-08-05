@@ -19,6 +19,8 @@ This tool is intended to aid penetration testers and security researchers during
 
 ## 🚀 How to Use
 
+Deployed url -> https://reverse-shell-generator-amber.vercel.app/
+
 Because this is a completely static, single-page application, no backend installation or database is required.
 
 ### Getting Started
